@@ -119,7 +119,7 @@ export default function Blog(){
                                 placeholder="Content of the Blog goes here.."
                                 required
                                 value={formData.segment}
-                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:formData.segment,segment:e.target.value,brand:formData.brand})}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:formData.price,segment:e.target.value,brand:formData.brand})}
                         />
                 </Row >
                 <Row label="Brand">
@@ -128,7 +128,7 @@ export default function Blog(){
                                 type="text"
                                 required
                                 value={formData.brand}
-                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:formData.segment,segment:formData.segment,brand:e.target.value})}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:formData.price,segment:formData.segment,brand:e.target.value})}
                         />
                 </Row >
 
@@ -145,7 +145,7 @@ export default function Blog(){
         <h2> Blogs </h2>
         {blogs.map((blog,i) => (
             <div className="blog" key={i}>
-                <h3>{blog.title}</h3>
+                <h3>{blog.title} &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{i}</h3>
                 <hr/>
                 <img src={blog.url} className="mahesh"/>
                 <hr/>
