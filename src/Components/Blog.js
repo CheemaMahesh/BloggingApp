@@ -9,7 +9,7 @@ import { collection, doc, getDocs, setDoc,onSnapshot, deleteDoc} from "firebase/
 
 export default function Blog(){
 
-    const [formData, setformData] = useState({title:"", content:""})
+    const [formData, setformData] = useState({title:"", url:"",color:"",category:"",price:"",segment:" ",brand:""})
     const [blogs, setBlogs] =  useState([]);
 
     const titleRef = useRef(null);
@@ -20,26 +20,6 @@ export default function Blog(){
 
     useEffect(() => {
         
-        /*********************************************************************** */
-        /** get all the documents from the fireStore using getDocs() */ 
-        /*********************************************************************** */
-        // async function fetchData(){
-        //     const snapShot =await getDocs(collection(db, "blogs"));
-        //     console.log(snapShot);
-
-        //     const blogs = snapShot.docs.map((doc) => {
-        //         return{
-        //             id: doc.id,
-        //             ...doc.data()
-        //         }
-        //     })
-        //     console.log(blogs);
-        //     setBlogs(blogs);
-
-        // }
-
-        // fetchData();
-
         const sub=onSnapshot(collection(db,"blogs"),(snapShot)=>{
                 const blogs = snapShot.docs.map((doc) => {
                 return{
@@ -57,24 +37,22 @@ export default function Blog(){
         e.preventDefault();
         titleRef.current.focus();
 
-        // Commenting setBlogs() as realtime Updates will be recieved from the database
-        //setBlogs([{title: formData.title,content:formData.content}, ...blogs]);
-
-        /*********************************************************************** */
-        /** Add a new document with an auto generated id. */ 
-        /*********************************************************************** */
-
         const docRef = doc(collection(db, "blogs"))
             
         await setDoc(docRef, {
                 title: formData.title,
-                content: formData.content,
+                url: formData.url,
+                color:formData.color,
+                category:formData.category,
+                price:formData.price,
+                segment:formData.segment,
+                brand:formData.brand,
                 createdOn: new Date()
             });
 
         /*********************************************************************** */
         
-        setformData({title: "", content: ""});
+        setformData({title: "", url: "",color:"" ,category:"",price:"",segment:"",brand:""});
     }
 
     async function removeBlog(i){
@@ -98,18 +76,63 @@ export default function Blog(){
                                 placeholder="Enter the Title of the Blog here.."
                                 ref = {titleRef}
                                 value={formData.title}
-                                onChange = {(e) => setformData({title: e.target.value, content:formData.content})}
+                                onChange = {(e) => setformData({title: e.target.value, url:formData.url,color: formData.color,category:formData.category,price:formData.price,segment:formData.segment,brand:formData.brand})}
                         />
                 </Row >
 
-                <Row label="Content">
-                        <textarea className="input content"
+                <Row label="Url">
+                        <input className="input"
                                 placeholder="Content of the Blog goes here.."
                                 required
-                                value={formData.content}
-                                onChange = {(e) => setformData({title: formData.title,content: e.target.value})}
+                                type="url"
+                                value={formData.url}
+                                onChange = {(e) => setformData({title: formData.title,url: e.target.value,color: formData.color,category:formData.category,price:formData.price,segment:formData.segment,brand:formData.brand})}
                         />
                 </Row >
+                <Row label="Color">
+                        <input className="input"
+                                placeholder="Content of the Blog goes here.."
+                                required
+                                value={formData.color}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color: e.target.value,category:formData.category,price:formData.price,segment:formData.segment,brand:formData.brand})}
+                        />
+                </Row >
+                <Row label="Category">
+                        <input className="input"
+                                placeholder="Content of the Blog goes here.."
+                                required
+                                value={formData.category}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color: formData.color,category:e.target.value,price:formData.price,segment:formData.segment,brand:formData.brand})}
+                        />
+                </Row >
+                <Row label="Price">
+                        <input className="input"
+                                placeholder="Content of the Blog goes here.."
+                                type="number"
+                                required
+                                value={formData.price}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:e.target.value,segment:formData.segment,brand:formData.brand})}
+                        />
+                </Row >
+                <Row label="Segment">
+                        <input className="input"
+                                placeholder="Content of the Blog goes here.."
+                                required
+                                value={formData.segment}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:formData.segment,segment:e.target.value,brand:formData.brand})}
+                        />
+                </Row >
+                <Row label="Brand">
+                        <input className="input"
+                                placeholder="Content of the Blog goes here.."
+                                type="text"
+                                required
+                                value={formData.brand}
+                                onChange = {(e) => setformData({title: formData.title,url: formData.url,color:formData.color,category:formData.category,price:formData.segment,segment:formData.segment,brand:e.target.value})}
+                        />
+                </Row >
+
+
          
                 <button className = "btn">ADD</button>
             </form>
@@ -124,7 +147,20 @@ export default function Blog(){
             <div className="blog" key={i}>
                 <h3>{blog.title}</h3>
                 <hr/>
-                <p>{blog.content}</p>
+                <img src={blog.url} className="mahesh"/>
+                <hr/>
+                <p>Color-{blog.color}</p>
+                <hr/>
+                <p>{blog.category}</p>
+                <hr/>
+                <p>&#8377; {blog.price}</p>
+                
+                <hr/>
+                <p> for {blog.segment}</p>
+                <hr/>
+                <p className="maheshh">{blog.brand}</p>
+
+               
 
                 <div className="blog-btn">
                         <button onClick={() => {
